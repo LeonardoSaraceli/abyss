@@ -1,0 +1,211 @@
+#register-wrapper {
+  display: grid;
+  grid-auto-rows: max-content;
+  grid-auto-flow: row;
+  min-height: 100vh;
+  place-content: center;
+  background-color: #121212;
+  color: white;
+  padding: 2rem;
+}
+
+#register-wrapper > #register-title {
+  display: grid;
+  grid-template-rows: repeat(2, max-content);
+  gap: 1.25rem;
+}
+
+#register-wrapper > #register-title > img,
+#register-wrapper > img {
+  justify-self: center;
+}
+
+#register-wrapper > #register-title > h1 {
+  text-align: center;
+  font-size: 48px;
+  word-spacing: -3px;
+  letter-spacing: -2px;
+}
+
+#register-wrapper > .stepper-bar {
+  width: 450px;
+  height: 2px;
+  background-color: #7c7c7c;
+  margin: 2rem 0;
+}
+
+#register-wrapper > .stepper-bar > #first-50 {
+  width: 0%;
+  background-color: #1ed760;
+  height: 2px;
+}
+
+#register-wrapper > .stepper-bar > #first-50.advanced {
+  animation: fillBar 0.3s ease forwards;
+}
+
+#register-wrapper > .stepper-bar > #first-100,
+#register-wrapper > .stepper-bar > #full-bar {
+  width: 50%;
+  background-color: #1ed760;
+  height: 2px;
+}
+
+#register-wrapper > .stepper-bar > #full-bar {
+  animation: rollback 0.3s ease backwards;
+}
+
+#register-wrapper > .stepper-bar > #first-100.advanced {
+  animation: fillBar2 0.3s ease forwards;
+}
+
+#register-wrapper > .register-stepper {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 1rem;
+  justify-content: center;
+}
+
+#register-wrapper > .register-stepper > svg {
+  color: #b3b3b3;
+  width: 24px;
+  height: 24px;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  margin-top: 0.85rem;
+}
+
+#register-wrapper > .register-stepper > svg:hover {
+  color: white;
+}
+
+#register-wrapper > .register-stepper > div {
+  display: grid;
+  grid-template-rows: repeat(2, max-content);
+  gap: 2rem;
+}
+
+#register-wrapper > .register-stepper > div > div {
+  display: grid;
+  grid-template-rows: repeat(2, max-content);
+  gap: 0.25rem;
+  font-weight: 600;
+}
+
+#register-wrapper > .register-stepper > div > div > .stepper {
+  color: #b3b3b3;
+}
+
+#register-wrapper > form,
+#register-wrapper > .register-stepper > div > form {
+  display: grid;
+  grid-template-rows: repeat(2, max-content);
+  gap: 1.25rem;
+}
+
+#register-wrapper > #default-form {
+  margin: 2.5rem 0;
+}
+
+#register-wrapper > form > div,
+#register-wrapper > .register-stepper > div > form > div {
+  display: grid;
+  grid-template-rows: repeat(2, max-content);
+  gap: 0.75rem;
+}
+
+#register-wrapper > form > div > label,
+#register-wrapper > .register-stepper > div > form > div > label {
+  font-size: 14px;
+  font-weight: 600;
+  width: max-content;
+}
+
+#register-wrapper > form > div > input,
+#register-wrapper > .register-stepper > div > form > div > input {
+  background-color: transparent;
+  border: 1px solid #7c7c7c;
+  padding: 0.85rem 0.75rem;
+  border-radius: 0.35rem;
+  color: white;
+  transition: all 0.15s ease;
+  font-size: 16px;
+  width: 300px;
+}
+
+#register-wrapper > form > div > input::placeholder,
+#register-wrapper > .register-stepper > div > form > div > input::placeholder {
+  color: #7c7c7c;
+}
+
+#register-wrapper > form > div > input:focus,
+#register-wrapper > .register-stepper > div > form > div > input:focus {
+  outline: none;
+  border: 1px solid white;
+}
+
+#register-wrapper > form > div > input:hover,
+#register-wrapper > .register-stepper > div > form > div > input:hover {
+  border-color: white;
+}
+
+#register-wrapper > form > button,
+#register-wrapper > .register-stepper > div > form > button {
+  padding: 0.85rem;
+  background-color: #1ed760;
+  border-radius: 2rem;
+  border: none;
+  color: black;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+#register-wrapper > form > button:hover,
+#register-wrapper > .register-stepper > div > form > button:hover {
+  background-color: #1abc54;
+}
+
+#register-wrapper > span {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid #292929;
+  color: #b3b3b3;
+}
+
+#register-wrapper > span > a {
+  color: white;
+  transition: all 0.15s ease;
+}
+
+#register-wrapper > span > a:hover {
+  color: #e2e2e2;
+}
+
+@keyframes fillBar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 50%;
+  }
+}
+
+@keyframes fillBar2 {
+  from {
+    width: 50%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes rollback {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 50%;
+  }
+}

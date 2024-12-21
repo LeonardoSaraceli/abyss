@@ -1,0 +1,120 @@
+#login {
+  display: grid;
+  background-color: #121212;
+  min-height: 100vh;
+}
+
+#login > section {
+  display: grid;
+  background: linear-gradient(rgba(255, 255, 255, 0.1) 0%, rgb(0, 0, 0) 100%);
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+#login > section > div {
+  display: grid;
+  grid-template-rows: repeat(4, max-content);
+  justify-content: center;
+  padding: 2rem;
+  min-width: 670px;
+  background-color: #121212;
+  border-radius: 0.5rem;
+  color: white;
+}
+
+#login > section > div > img {
+  justify-self: center;
+  width: 40px;
+  height: 40px;
+}
+
+#login > section > div > h1 {
+  text-align: center;
+  font-size: 36px;
+  word-spacing: -3px;
+  letter-spacing: -2px;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+#login > section > div > #div-breaker {
+  width: 534px;
+  height: 1px;
+  background-color: #292929;
+}
+
+#login > section > div > form {
+  display: grid;
+  grid-template-rows: repeat(3, max-content);
+  gap: 1rem;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+#login > section > div > form > div {
+  display: grid;
+  grid-template-rows: repeat(2, max-content);
+  gap: 0.75rem;
+}
+
+#login > section > div > form > div > label {
+  font-size: 14px;
+  font-weight: 600;
+  width: max-content;
+}
+
+#login > section > div > form > div > input {
+  background-color: transparent;
+  border: 1px solid #7c7c7c;
+  padding: 0.85rem 0.75rem;
+  border-radius: 0.35rem;
+  color: white;
+  transition: all 0.15s ease;
+  font-size: 16px;
+  width: 300px;
+}
+
+#login > section > div > form > div > input::placeholder {
+  color: #7c7c7c;
+}
+
+#login > section > div > form > div > input:focus {
+  outline: none;
+  border: 1px solid white;
+}
+
+#login > section > div > form > div > input:hover {
+  border-color: white;
+}
+
+#login > section > div > form button {
+  padding: 0.85rem;
+  background-color: #1ed760;
+  border-radius: 2rem;
+  border: none;
+  color: black;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin-top: 1rem;
+}
+
+#login > section > div > form button:hover {
+  background-color: #1abc54;
+}
+
+#login > section > div > span {
+  text-align: center;
+  color: #b3b3b3;
+}
+
+#login > section > div > span > a {
+  color: white;
+  transition: all 0.15s ease;
+}
+
+#login > section > div > span > a:hover {
+  color: #e2e2e2;
+}

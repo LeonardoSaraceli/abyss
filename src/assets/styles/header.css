@@ -1,0 +1,146 @@
+#header {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: black;
+  color: white;
+  height: max-content;
+  align-items: center;
+}
+
+#header > a {
+  display: grid;
+}
+
+#header > a > img {
+  width: 40px;
+  height: 40px;
+}
+
+#header > #search-nav {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 0.5rem;
+  align-items: center;
+  color: #b3b3b3;
+}
+
+#header > #search-nav > svg {
+  width: 24px;
+  height: 24px;
+  padding: 0.85rem;
+  background: #1f1f1f;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+#header > #search-nav > svg:hover {
+  transform: scale(1.05);
+  background: #292929;
+  color: white;
+}
+
+#header > #search-nav > div {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 0 0.85rem;
+  background: #1f1f1f;
+  cursor: pointer;
+  border-radius: 2rem;
+  width: 400px;
+  transition: all 0.15s ease;
+}
+
+#header > #search-nav > div:hover,
+#header > #profile-has-account:hover {
+  background: #292929;
+  color: white;
+}
+
+#header > #search-nav > div > svg {
+  width: 24px;
+  height: 24px;
+}
+
+#header > #search-nav > div > input {
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  padding: 0.85rem 0;
+  color: white;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 500;
+}
+
+#header > #search-nav > div > input::placeholder {
+  color: #b3b3b3;
+}
+
+#header > #search-nav > div > input:focus {
+  outline: none;
+}
+
+#header > #search-nav > div > input::-webkit-search-cancel-button {
+  display: none;
+}
+
+#header > #profile-has-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+}
+
+#header > #profile-has-account {
+  width: 40px;
+  display: grid;
+  text-align: center;
+  align-items: center;
+  height: 40px;
+  padding: 0.5rem;
+  background: #1f1f1f;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: #b3b3b3;
+}
+
+#header > #account-nav {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 2rem;
+  align-items: center;
+}
+
+#header > #account-nav > a {
+  text-decoration: none;
+  color: currentColor;
+  font-weight: 900;
+  transition: all 0.15s ease;
+}
+
+#header > #account-nav > #main-register {
+  color: #b3b3b3;
+}
+
+#header > #account-nav > #main-login {
+  padding: 0.85rem 2rem;
+  background-color: white;
+  color: black;
+  border-radius: 2rem;
+}
+
+#header > #account-nav > #main-register:hover,
+#header > #account-nav > #main-login:hover,
+#header > #profile-has-picture:hover {
+  transform: scale(1.05);
+}
+
+#header > #account-nav > #main-register:hover {
+  color: white;
+}

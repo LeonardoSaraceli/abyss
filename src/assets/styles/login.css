@@ -49,7 +49,7 @@
   grid-template-rows: repeat(3, max-content);
   gap: 1rem;
   justify-content: center;
-  margin: 2rem 0;
+  margin: 2rem 0 1rem 0;
 }
 
 #login > section > div > form > div {
@@ -73,6 +73,8 @@
   transition: all 0.15s ease;
   font-size: 16px;
   width: 300px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 600;
 }
 
 #login > section > div > form > div > input::placeholder {
@@ -98,7 +100,8 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
-  margin-top: 1rem;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 900;
 }
 
 #login > section > div > form button:hover {

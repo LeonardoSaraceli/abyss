@@ -1,0 +1,52 @@
+#aside {
+  display: grid;
+  grid-template-rows: max-content 1fr;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #121212;
+  color: #b3b3b3;
+  overflow-y: auto;
+  max-height: calc(100vh - 75px);
+}
+
+#aside > div {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+#aside > div > div {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 0.85rem;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.15s ease;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+#aside > div > div:hover {
+  color: white;
+}
+
+#aside > div > div > svg {
+  width: 24px;
+  height: 24px;
+}
+
+#aside > div > svg {
+  width: 18px;
+  height: 18px;
+  transition: all 0.15s ease;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#aside > div > svg:hover {
+  color: white;
+  background-color: #292929;
+}

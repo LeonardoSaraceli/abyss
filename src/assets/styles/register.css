@@ -131,6 +131,8 @@
   transition: all 0.15s ease;
   font-size: 16px;
   width: 300px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 600;
 }
 
 #register-wrapper > form > div > input::placeholder,
@@ -160,6 +162,8 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 900;
 }
 
 #register-wrapper > form > button:hover,

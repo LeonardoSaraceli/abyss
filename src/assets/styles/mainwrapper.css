@@ -50,7 +50,32 @@ footer > #music-title > div > a {
   transition: all 0.15s ease;
 }
 
-footer > #footer-play-music {
+footer > #music-controlls {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+}
+
+footer > #music-controlls > .footer-pass-music {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  color: #b3b3b3;
+  transition: all 0.15s ease;
+}
+
+footer > #music-controlls > .footer-pass-music:hover {
+  color: white;
+}
+
+footer > #music-controlls > .footer-pass-music.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+footer > #music-controlls > #footer-play-music {
   width: 18px;
   height: 18px;
   cursor: pointer;
@@ -62,7 +87,7 @@ footer > #footer-play-music {
   transition: all 0.15s ease;
 }
 
-footer > #footer-play-music:hover {
+footer > #music-controlls > #footer-play-music:hover {
   background-color: #e1e1e1;
 }
 
@@ -97,6 +122,13 @@ footer > #footer-play-music:hover {
 #mainwrapper > section > #main-content {
   grid-auto-rows: max-content;
   grid-auto-flow: row;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  transition: scrollbar-color 0.3s ease;
+}
+
+#mainwrapper > section > #main-content::-webkit-scrollbar {
+  display: none;
 }
 
 #content-visualizer {
@@ -238,6 +270,7 @@ footer > #footer-play-music:hover {
   display: grid;
   grid-template-rows: repeat(2, max-content);
   gap: 0.5rem;
+  position: relative;
 }
 
 #mainwrapper > section > #main-content > .main-stuff > ul {
@@ -245,7 +278,6 @@ footer > #footer-play-music:hover {
   grid-auto-columns: max-content;
   grid-auto-flow: column;
   list-style-type: none;
-  position: relative;
   overflow-x: hidden;
 }
 
@@ -302,7 +334,7 @@ footer > #footer-play-music:hover {
   font-size: 14px;
 }
 
-#mainwrapper > section > #main-content > .main-stuff > ul > button {
+#mainwrapper > section > #main-content > .main-stuff > button {
   display: grid;
   position: absolute;
   top: 50%;
@@ -319,25 +351,25 @@ footer > #footer-play-music:hover {
   z-index: 10;
 }
 
-#mainwrapper > section > #main-content > .main-stuff > ul > button > svg {
+#mainwrapper > section > #main-content > .main-stuff > button > svg {
   width: 20px;
   height: 20px;
 }
 
-#mainwrapper > section > #main-content > .main-stuff > ul:hover > button {
+#mainwrapper > section > #main-content > .main-stuff:hover > button {
   opacity: 1;
   pointer-events: auto;
 }
 
-#mainwrapper > section > #main-content > .main-stuff > ul > #scroll-left {
+#mainwrapper > section > #main-content > .main-stuff > #scroll-left {
   left: 0.5rem;
 }
 
-#mainwrapper > section > #main-content > .main-stuff > ul > #scroll-right {
+#mainwrapper > section > #main-content > .main-stuff > #scroll-right {
   right: 0.5rem;
 }
 
-#mainwrapper > section > #main-content > .main-stuff > ul > button:hover {
+#mainwrapper > section > #main-content > .main-stuff > button:hover {
   background-color: #292929;
   color: white;
 }

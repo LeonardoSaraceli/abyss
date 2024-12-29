@@ -11,7 +11,7 @@ export default function Aside() {
     <aside
       id="aside"
       style={
-        Object.entries(currentMusic).length > 0
+        currentMusic && Object.entries(currentMusic).length > 0
           ? { maxHeight: 'calc(100vh - 145px)' }
           : null
       }

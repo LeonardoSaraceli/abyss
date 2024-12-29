@@ -31,7 +31,11 @@ export default function Header() {
         <div>
           <FontAwesomeIcon icon={faMagnifyingGlass} />
 
-          <input type="search" placeholder="O que você quer ouvir?" />
+          <input
+            type="search"
+            name="search"
+            placeholder="O que você quer ouvir?"
+          />
         </div>
       </div>
 

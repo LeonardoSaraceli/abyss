@@ -13,18 +13,21 @@ export default function MainContent() {
     currentMusic,
     setCurrentMusic,
     setSelectedMusic,
-    togglePlayPause
+    togglePlayPause,
+    setCurrentAlbum,
   } = useContext(StateContext)
 
   const musicsRef = useRef(null)
   const usersRef = useRef(null)
   const albumsRef = useRef(null)
 
-  const [showLeftButton, setShowLeftButton] = useState(false)
-  const [showRightButton, setShowRightButton] = useState(false)
+  const [showMusicsScroll, setShowMusicsScroll] = useState(false)
+  const [showUsersScroll, setShowUsersScroll] = useState(false)
+  const [showAlbumsScroll, setShowAlbumsScroll] = useState(false)
 
   const scroll = (ref, direction) => {
-    const scrollAmount = 590
+    const scrollAmount = 828
+
     if (ref.current) {
       ref.current.scrollBy({
         left: direction === 'right' ? scrollAmount : -scrollAmount,
@@ -32,31 +35,6 @@ export default function MainContent() {
       })
     }
   }
-
-  const updateButtonsVisibility = (ref) => {
-    if (ref.current) {
-      const scrollLeft = ref.current.scrollLeft
-      const scrollWidth = ref.current.scrollWidth
-      const clientWidth = ref.current.clientWidth
-
-      setShowLeftButton(scrollLeft > 0)
-      setShowRightButton(scrollLeft < scrollWidth - clientWidth)
-    }
-  }
-
-  useEffect(() => {
-    if (musicsRef.current) {
-      updateButtonsVisibility(musicsRef)
-    }
-
-    if (usersRef.current) {
-      updateButtonsVisibility(usersRef)
-    }
-
-    if (albumsRef.current) {
-      updateButtonsVisibility(albumsRef)
-    }
-  }, [musics.length, users.length, albums.length])
 
   const handleOnClick = (endpoint, id, obj) => {
     fetch(`${import.meta.env.VITE_API_URL}/${endpoint}/${id}`, {
@@ -76,11 +54,36 @@ export default function MainContent() {
       .catch((error) => console.error(error))
   }
 
+  useEffect(() => {
+    const checkScrollVisibility = (ref, setShowScroll) => {
+      if (ref.current) {
+        const { scrollWidth, clientWidth } = ref.current
+        setShowScroll(scrollWidth > clientWidth)
+      }
+    }
+
+    checkScrollVisibility(musicsRef, setShowMusicsScroll)
+    checkScrollVisibility(usersRef, setShowUsersScroll)
+    checkScrollVisibility(albumsRef, setShowAlbumsScroll)
+
+    const handleResize = () => {
+      checkScrollVisibility(musicsRef, setShowMusicsScroll)
+      checkScrollVisibility(usersRef, setShowUsersScroll)
+      checkScrollVisibility(albumsRef, setShowAlbumsScroll)
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [musics, users, albums])
+
   return (
     <div
       id="main-content"
       style={
-        Object.entries(currentMusic).length > 0
+        currentMusic && Object.entries(currentMusic).length > 0
           ? { maxHeight: 'calc(100vh - 145px)' }
           : null
       }
@@ -89,21 +92,20 @@ export default function MainContent() {
         <div className="main-stuff">
           <h1>Músicas</h1>
 
-          <ul ref={musicsRef}>
-            {showLeftButton && (
-              <button
-                id="scroll-left"
-                onClick={() => scroll(musicsRef, 'left')}
-              >
-                <FontAwesomeIcon icon={faAngleLeft} />
-              </button>
-            )}
+          {showMusicsScroll && (
+            <button id="scroll-left" onClick={() => scroll(musicsRef, 'left')}>
+              <FontAwesomeIcon icon={faAngleLeft} />
+            </button>
+          )}
 
+          <ul ref={musicsRef}>
             {musics.map((music) => (
               <li
                 key={music.id}
                 onClick={() => {
-                  if (currentMusic.id !== music.id) {
+                  if (!currentMusic || currentMusic.id !== music.id) {
+                    setCurrentAlbum(null)
+                    localStorage.removeItem('current-album')
                     localStorage.setItem('current-music', JSON.stringify(music))
                     setCurrentMusic(music)
                     setSelectedMusic(true)
@@ -113,22 +115,20 @@ export default function MainContent() {
                 }}
               >
                 <img src={music.cover} alt={music.title} />
-
                 <h4>{music.title}</h4>
-
                 <span>{getCreatorNames(music.id)}</span>
               </li>
             ))}
-
-            {showRightButton && (
-              <button
-                id="scroll-right"
-                onClick={() => scroll(musicsRef, 'right')}
-              >
-                <FontAwesomeIcon icon={faAngleRight} />
-              </button>
-            )}
           </ul>
+
+          {showMusicsScroll && (
+            <button
+              id="scroll-right"
+              onClick={() => scroll(musicsRef, 'right')}
+            >
+              <FontAwesomeIcon icon={faAngleRight} />
+            </button>
+          )}
         </div>
       )}
 
@@ -136,13 +136,13 @@ export default function MainContent() {
         <div className="main-stuff">
           <h1>Perfis</h1>
 
-          <ul ref={usersRef}>
-            {showLeftButton && (
-              <button id="scroll-left" onClick={() => scroll(usersRef, 'left')}>
-                <FontAwesomeIcon icon={faAngleLeft} />
-              </button>
-            )}
+          {showUsersScroll && (
+            <button id="scroll-left" onClick={() => scroll(usersRef, 'left')}>
+              <FontAwesomeIcon icon={faAngleLeft} />
+            </button>
+          )}
 
+          <ul ref={usersRef}>
             {users.map((user) => (
               <li
                 key={user.id}
@@ -157,20 +157,16 @@ export default function MainContent() {
                 ) : (
                   <h2 id="main-profile-text">{user.name[0].toUpperCase()}</h2>
                 )}
-
                 <h4>{user.name}</h4>
               </li>
             ))}
-
-            {showRightButton && (
-              <button
-                id="scroll-right"
-                onClick={() => scroll(usersRef, 'right')}
-              >
-                <FontAwesomeIcon icon={faAngleRight} />
-              </button>
-            )}
           </ul>
+
+          {showUsersScroll && (
+            <button id="scroll-right" onClick={() => scroll(usersRef, 'right')}>
+              <FontAwesomeIcon icon={faAngleRight} />
+            </button>
+          )}
         </div>
       )}
 
@@ -178,38 +174,33 @@ export default function MainContent() {
         <div className="main-stuff">
           <h1>Álbuns</h1>
 
-          <ul ref={albumsRef}>
-            {showLeftButton && (
-              <button
-                id="scroll-left"
-                onClick={() => scroll(albumsRef, 'left')}
-              >
-                <FontAwesomeIcon icon={faAngleLeft} />
-              </button>
-            )}
+          {showAlbumsScroll && (
+            <button id="scroll-left" onClick={() => scroll(albumsRef, 'left')}>
+              <FontAwesomeIcon icon={faAngleLeft} />
+            </button>
+          )}
 
+          <ul ref={albumsRef}>
             {albums.map((album) => (
               <li
                 key={album.id}
                 onClick={() => handleOnClick('albums', album.id, 'album')}
               >
                 <img src={album.cover} alt={album.title} />
-
                 <h4>{album.title}</h4>
-
                 <span>{getCreatorNames(album.id)}</span>
               </li>
             ))}
-
-            {showRightButton && (
-              <button
-                id="scroll-right"
-                onClick={() => scroll(albumsRef, 'right')}
-              >
-                <FontAwesomeIcon icon={faAngleRight} />
-              </button>
-            )}
           </ul>
+
+          {showAlbumsScroll && (
+            <button
+              id="scroll-right"
+              onClick={() => scroll(albumsRef, 'right')}
+            >
+              <FontAwesomeIcon icon={faAngleRight} />
+            </button>
+          )}
         </div>
       )}
     </div>

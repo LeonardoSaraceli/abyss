@@ -22,9 +22,18 @@ export default function App() {
   )
   const [isPlaying, setIsPlaying] = useState(false)
   const [volume, setVolume] = useState(() => {
-    return parseFloat(localStorage.getItem('music-volume')) || 0.2
+    return parseFloat(localStorage.getItem('music-volume')) || 0.1
   })
   const [selectedMusic, setSelectedMusic] = useState(false)
+  const [musicQueue, setMusicQueue] = useState(
+    JSON.parse(localStorage.getItem('music-queue')) || []
+  )
+  const [currentQueueIndex, setCurrentQueueIndex] = useState(
+    JSON.parse(localStorage.getItem('current-queue-index')) || 0
+  )
+  const [currentAlbum, setCurrentAlbum] = useState(
+    JSON.parse(localStorage.getItem('current-album')) || null
+  )
 
   const audioRef = useRef(null)
 
@@ -64,16 +73,10 @@ export default function App() {
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = volume
-    }
-  }, [audioRef, volume])
-
-  useEffect(() => {
-    if (audioRef.current) {
       audioRef.current.pause()
     }
 
-    if (currentMusic.url || currentMusic.music_url) {
+    if (currentMusic && (currentMusic.url || currentMusic.music_url)) {
       audioRef.current.src = currentMusic.url || currentMusic.music_url
       audioRef.current.load()
       setIsPlaying(false)
@@ -124,6 +127,37 @@ export default function App() {
       .join(', ')
   }
 
+  useEffect(() => {
+    localStorage.setItem('music-queue', JSON.stringify(musicQueue))
+  }, [musicQueue])
+
+  useEffect(() => {
+    if (audioRef.current && isPlaying && audioRef.current.volume !== volume) {
+      audioRef.current.volume = volume
+    }
+  }, [volume, isPlaying])
+
+  useEffect(() => {
+    localStorage.setItem(
+      'current-queue-index',
+      JSON.stringify(currentQueueIndex)
+    )
+  }, [currentQueueIndex])
+
+  useEffect(() => {
+    const storedQueue = JSON.parse(localStorage.getItem('music-queue'))
+    const storedIndex = JSON.parse(localStorage.getItem('current-queue-index'))
+
+    if (storedQueue && storedIndex !== null) {
+      setMusicQueue(storedQueue)
+      setCurrentQueueIndex(storedIndex)
+
+      if (!currentMusic) {
+        setCurrentMusic(storedQueue[storedIndex])
+      }
+    }
+  }, [currentMusic])
+
   return (
     <StateContext.Provider
       value={{
@@ -143,6 +177,12 @@ export default function App() {
         handleVolumeChange,
         volume,
         setSelectedMusic,
+        musicQueue,
+        setMusicQueue,
+        currentQueueIndex,
+        setCurrentQueueIndex,
+        currentAlbum,
+        setCurrentAlbum,
       }}
     >
       <Routes>

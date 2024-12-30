@@ -76,7 +76,11 @@ export default function App() {
       audioRef.current.pause()
     }
 
-    if (currentMusic && (currentMusic.url || currentMusic.music_url)) {
+    if (
+      currentMusic &&
+      audioRef.current &&
+      (currentMusic.url || currentMusic.music_url)
+    ) {
       audioRef.current.src = currentMusic.url || currentMusic.music_url
       audioRef.current.load()
       setIsPlaying(false)

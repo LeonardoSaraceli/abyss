@@ -101,7 +101,10 @@ export default function ContentVisualizer() {
 
                       if (selectedIndex !== -1) {
                         setCurrentAlbum(currentVisualizer)
-                        localStorage.setItem('current-album', JSON.stringify(currentVisualizer))
+                        localStorage.setItem(
+                          'current-album',
+                          JSON.stringify(currentVisualizer)
+                        )
 
                         setMusicQueue(queue)
                         localStorage.setItem(
@@ -125,10 +128,26 @@ export default function ContentVisualizer() {
                       }
                     }}
                   >
-                    <span>{index + 1}</span>
+                    <span
+                      style={
+                        currentMusic.music_id === music.music_id
+                          ? { color: '#FFDE04' }
+                          : null
+                      }
+                    >
+                      {index + 1}
+                    </span>
 
                     <div>
-                      <span>{music.music_title}</span>
+                      <span
+                        style={
+                          currentMusic.music_id === music.music_id
+                            ? { color: '#FFDE04' }
+                            : null
+                        }
+                      >
+                        {music.music_title}
+                      </span>
                       <a>{getCreatorNames(music.music_id)}</a>
                     </div>
                   </li>

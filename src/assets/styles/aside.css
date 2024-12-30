@@ -7,6 +7,12 @@
   color: #b3b3b3;
   overflow-y: auto;
   max-height: calc(100vh - 75px);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#aside::-webkit-scrollbar {
+  display: none;
 }
 
 #aside > div {

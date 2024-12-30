@@ -22,7 +22,7 @@ export default function App() {
   )
   const [isPlaying, setIsPlaying] = useState(false)
   const [volume, setVolume] = useState(() => {
-    return parseFloat(localStorage.getItem('music-volume')) || 0.1
+    return parseFloat(localStorage.getItem('music-volume')) || 0.2
   })
   const [selectedMusic, setSelectedMusic] = useState(false)
   const [musicQueue, setMusicQueue] = useState(

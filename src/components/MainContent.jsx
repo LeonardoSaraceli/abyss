@@ -148,7 +148,7 @@ export default function MainContent() {
                 key={user.id}
                 onClick={() => handleOnClick('users', user.id, 'user')}
               >
-                {user.profile ? (
+                {user.picture ? (
                   <img
                     id="main-profile-picture"
                     src={user.picture}

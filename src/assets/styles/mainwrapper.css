@@ -124,15 +124,17 @@ footer > #music-controlls > #footer-play-music:hover {
   grid-auto-flow: row;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  transition: scrollbar-color 0.3s ease;
 }
 
+#content-visualizer::-webkit-scrollbar,
 #mainwrapper > section > #main-content::-webkit-scrollbar {
   display: none;
 }
 
 #content-visualizer {
   grid-template-rows: max-content 1fr;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 #content-visualizer > #profile-visualizer {
@@ -207,7 +209,7 @@ footer > #music-controlls > #footer-play-music:hover {
   width: 24px;
   height: 24px;
   display: grid;
-  background-color: #1ed760;
+  background-color: #FFDE04;
   padding: 1rem;
   border-radius: 50%;
   color: #121212;
@@ -217,7 +219,7 @@ footer > #music-controlls > #footer-play-music:hover {
 
 #content-visualizer > .second-div-visualizer > #play-music:hover {
   transform: scale(1.05);
-  background-color: #1abc54;
+  background-color: #cfb403;
 }
 
 #content-visualizer > .second-div-visualizer > ul {
@@ -312,7 +314,7 @@ footer > #music-controlls > #footer-play-music:hover {
 #main-profile-picture {
   width: 180px;
   height: 180px;
-  border-radius: 50%;
+  border-radius: 50% !important;
 }
 
 #main-profile-text {

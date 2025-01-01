@@ -6,7 +6,6 @@ import { StateContext } from './App'
 export default function MainContent() {
   const {
     users,
-    musics,
     albums,
     setCurrentVisualizer,
     getCreatorNames,
@@ -21,10 +20,27 @@ export default function MainContent() {
     searchBar,
   } = useContext(StateContext)
 
+  const [singles, setSingles] = useState([])
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/musics/singles`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.musics) {
+          setSingles(data.musics)
+        }
+      })
+      .catch((error) => console.error(error))
+  }, [])
+
   const searchBarResults = () => {
     const lowerCaseQuery = searchBar.toLowerCase()
 
-    const filteredMusics = musics.filter((music) =>
+    const filteredMusics = singles.filter((music) =>
       music.title.toLowerCase().includes(lowerCaseQuery)
     )
 
@@ -122,7 +138,7 @@ export default function MainContent() {
     >
       {filteredMusics.length > 0 && (
         <div className="main-stuff">
-          <h1>Músicas</h1>
+          <h1>Singles</h1>
 
           {showMusicsScroll && (
             <button id="scroll-left" onClick={() => scroll(musicsRef, 'left')}>

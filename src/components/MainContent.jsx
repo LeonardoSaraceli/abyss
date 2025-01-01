@@ -15,6 +15,9 @@ export default function MainContent() {
     setSelectedMusic,
     togglePlayPause,
     setCurrentAlbum,
+    audioRef,
+    setCurrentQueueIndex,
+    setMusicQueue,
   } = useContext(StateContext)
 
   const musicsRef = useRef(null)
@@ -99,16 +102,45 @@ export default function MainContent() {
           )}
 
           <ul ref={musicsRef}>
-            {musics.map((music) => (
+            {musics.map((music, index) => (
               <li
                 key={music.id}
                 onClick={() => {
+                  const audio = audioRef.current
+                  if (audio && !audio.paused) {
+                    audio.pause()
+                  }
+
                   if (!currentMusic || currentMusic.id !== music.id) {
                     setCurrentAlbum(null)
                     localStorage.removeItem('current-album')
+
+                    localStorage.setItem('music-queue', JSON.stringify(musics))
+                    setMusicQueue(musics)
+
+                    localStorage.setItem(
+                      'current-queue-index',
+                      JSON.stringify(index)
+                    )
+                    setCurrentQueueIndex(index)
+
                     localStorage.setItem('current-music', JSON.stringify(music))
                     setCurrentMusic(music)
                     setSelectedMusic(true)
+
+                    if (audio) {
+                      audio.src = music.audio || music.music_url
+                      audio.load()
+
+                      audio.oncanplaythrough = () => {
+                        audio.play().catch((error) => {
+                          console.error(
+                            'Erro ao tentar reproduzir a música:',
+                            error
+                          )
+                        })
+                      }
+                    }
                   } else {
                     togglePlayPause()
                   }

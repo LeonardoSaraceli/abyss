@@ -61,29 +61,34 @@ export default function App() {
     }
   }
 
+  const volumeBarRef = useRef(null)
+
   const handleVolumeChange = (e) => {
     const newVolume = parseFloat(e.target.value)
     setVolume(newVolume)
     localStorage.setItem('music-volume', newVolume)
 
+    const ratio = newVolume * 100
+
     if (audioRef.current) {
       audioRef.current.volume = newVolume
+    }
+
+    if (volumeBarRef.current) {
+      volumeBarRef.current.style.background = `linear-gradient(90deg, #ffffff ${ratio}%, #292929 ${ratio}%)`
     }
   }
 
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.pause()
-    }
+      audioRef.current.src = ''
 
-    if (
-      currentMusic &&
-      audioRef.current &&
-      (currentMusic.url || currentMusic.music_url)
-    ) {
-      audioRef.current.src = currentMusic.url || currentMusic.music_url
-      audioRef.current.load()
-      setIsPlaying(false)
+      if (currentMusic && (currentMusic.url || currentMusic.music_url)) {
+        audioRef.current.src = currentMusic.url || currentMusic.music_url
+        audioRef.current.load()
+        setIsPlaying(false)
+      }
     }
   }, [currentMusic])
 
@@ -187,6 +192,8 @@ export default function App() {
         setCurrentQueueIndex,
         currentAlbum,
         setCurrentAlbum,
+        setVolume,
+        volumeBarRef,
       }}
     >
       <Routes>

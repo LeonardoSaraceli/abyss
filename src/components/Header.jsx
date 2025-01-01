@@ -6,7 +6,7 @@ import { useContext } from 'react'
 import { StateContext } from './App'
 
 export default function Header() {
-  const { user, currentVisualizer, setCurrentVisualizer } =
+  const { user, currentVisualizer, setCurrentVisualizer, setSearchBar } =
     useContext(StateContext)
 
   return (
@@ -34,6 +34,8 @@ export default function Header() {
           <input
             type="search"
             name="search"
+            autoComplete="off"
+            onChange={(e) => setSearchBar(e.target.value)}
             placeholder="O que você quer ouvir?"
           />
         </div>

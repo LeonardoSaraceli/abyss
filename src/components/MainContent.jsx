@@ -18,7 +18,36 @@ export default function MainContent() {
     audioRef,
     setCurrentQueueIndex,
     setMusicQueue,
+    searchBar,
   } = useContext(StateContext)
+
+  const searchBarResults = () => {
+    const lowerCaseQuery = searchBar.toLowerCase()
+
+    const filteredMusics = musics.filter((music) =>
+      music.title.toLowerCase().includes(lowerCaseQuery)
+    )
+
+    const filteredUsers = users.filter((user) =>
+      user.name.toLowerCase().includes(lowerCaseQuery)
+    )
+
+    const filteredAlbums = albums.filter((album) =>
+      album.title.toLowerCase().includes(lowerCaseQuery)
+    )
+
+    return {
+      musics: filteredMusics,
+      users: filteredUsers,
+      albums: filteredAlbums,
+    }
+  }
+
+  const {
+    musics: filteredMusics,
+    users: filteredUsers,
+    albums: filteredAlbums,
+  } = searchBarResults()
 
   const musicsRef = useRef(null)
   const usersRef = useRef(null)
@@ -80,7 +109,7 @@ export default function MainContent() {
     return () => {
       window.removeEventListener('resize', handleResize)
     }
-  }, [musics, users, albums])
+  }, [filteredMusics, filteredUsers, filteredAlbums])
 
   return (
     <div
@@ -91,7 +120,7 @@ export default function MainContent() {
           : null
       }
     >
-      {musics.length > 0 && (
+      {filteredMusics.length > 0 && (
         <div className="main-stuff">
           <h1>Músicas</h1>
 
@@ -102,7 +131,7 @@ export default function MainContent() {
           )}
 
           <ul ref={musicsRef}>
-            {musics.map((music, index) => (
+            {filteredMusics.map((music, index) => (
               <li
                 key={music.id}
                 onClick={() => {
@@ -115,8 +144,11 @@ export default function MainContent() {
                     setCurrentAlbum(null)
                     localStorage.removeItem('current-album')
 
-                    localStorage.setItem('music-queue', JSON.stringify(musics))
-                    setMusicQueue(musics)
+                    localStorage.setItem(
+                      'music-queue',
+                      JSON.stringify(filteredMusics)
+                    )
+                    setMusicQueue(filteredMusics)
 
                     localStorage.setItem(
                       'current-queue-index',
@@ -164,7 +196,7 @@ export default function MainContent() {
         </div>
       )}
 
-      {users.length > 0 && (
+      {filteredUsers.length > 0 && (
         <div className="main-stuff">
           <h1>Perfis</h1>
 
@@ -175,7 +207,7 @@ export default function MainContent() {
           )}
 
           <ul ref={usersRef}>
-            {users.map((user) => (
+            {filteredUsers.map((user) => (
               <li
                 key={user.id}
                 onClick={() => handleOnClick('users', user.id, 'user')}
@@ -202,7 +234,7 @@ export default function MainContent() {
         </div>
       )}
 
-      {albums.length > 0 && (
+      {filteredAlbums.length > 0 && (
         <div className="main-stuff">
           <h1>Álbuns</h1>
 
@@ -213,7 +245,7 @@ export default function MainContent() {
           )}
 
           <ul ref={albumsRef}>
-            {albums.map((album) => (
+            {filteredAlbums.map((album) => (
               <li
                 key={album.id}
                 onClick={() => handleOnClick('albums', album.id, 'album')}

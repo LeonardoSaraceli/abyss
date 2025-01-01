@@ -34,6 +34,7 @@ export default function App() {
   const [currentAlbum, setCurrentAlbum] = useState(
     JSON.parse(localStorage.getItem('current-album')) || null
   )
+  const [searchBar, setSearchBar] = useState('')
 
   const audioRef = useRef(null)
 
@@ -194,6 +195,8 @@ export default function App() {
         setCurrentAlbum,
         setVolume,
         volumeBarRef,
+        searchBar,
+        setSearchBar,
       }}
     >
       <Routes>

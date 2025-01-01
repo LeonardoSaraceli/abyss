@@ -1,5 +1,9 @@
 import { useContext, useRef, useState, useEffect } from 'react'
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import {
+  faAngleLeft,
+  faAngleRight,
+  faMusic,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { StateContext } from './App'
 
@@ -194,8 +198,15 @@ export default function MainContent() {
                   }
                 }}
               >
-                <img src={music.cover} alt={music.title} />
+                {music.cover ? (
+                  <img src={music.cover} alt={music.title} />
+                ) : (
+                  <div>
+                    <FontAwesomeIcon icon={faMusic} />
+                  </div>
+                )}
                 <h4>{music.title}</h4>
+
                 <span>{getCreatorNames(music.id)}</span>
               </li>
             ))}

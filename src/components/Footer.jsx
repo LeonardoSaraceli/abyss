@@ -8,6 +8,7 @@ import {
   faStepBackward,
   faVolumeLow,
   faVolumeXmark,
+  faMusic,
 } from '@fortawesome/free-solid-svg-icons'
 
 export default function Footer() {
@@ -175,10 +176,16 @@ export default function Footer() {
       {currentMusic && Object.entries(currentMusic).length > 0 && (
         <footer>
           <div id="music-title">
-            <img
-              src={currentMusic.cover || currentMusic.music_cover}
-              alt={currentMusic.title || currentMusic.music_title}
-            />
+            {currentMusic.cover || currentMusic.music_cover ? (
+              <img
+                src={currentMusic.cover || currentMusic.music_cover}
+                alt={currentMusic.title || currentMusic.music_title}
+              />
+            ) : (
+              <figure>
+                <FontAwesomeIcon icon={faMusic} />
+              </figure>
+            )}
 
             <div>
               <h6>{currentMusic.title || currentMusic.music_title}</h6>

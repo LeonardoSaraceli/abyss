@@ -18,10 +18,23 @@ footer > #music-title {
   align-items: center;
 }
 
-footer > #music-title > img {
+footer > #music-title > img,
+footer > #music-title > figure {
   border-radius: 0.35rem;
   width: 60px;
   height: 60px;
+}
+
+footer > #music-title > figure {
+  display: grid;
+  background-color: #292929;
+  place-items: center;
+  color: #b3b3b3;
+}
+
+footer > #music-title > figure > svg {
+  width: 25px;
+  height: 25px;
 }
 
 footer > #music-title > div {

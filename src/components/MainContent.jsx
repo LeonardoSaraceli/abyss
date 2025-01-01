@@ -131,6 +131,10 @@ export default function MainContent() {
     }
   }, [filteredMusics, filteredUsers, filteredAlbums])
 
+  const truncateWord = (word) => {
+    return word.length > 20 ? word.split('').slice(0, 17).join('').trim() + '...' : word
+  }
+
   return (
     <div
       id="main-content"
@@ -205,7 +209,7 @@ export default function MainContent() {
                     <FontAwesomeIcon icon={faMusic} />
                   </div>
                 )}
-                <h4>{music.title}</h4>
+                <h4>{truncateWord(music.title)}</h4>
 
                 <span>{getCreatorNames(music.id)}</span>
               </li>

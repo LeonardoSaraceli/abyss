@@ -27,14 +27,14 @@ footer > #music-title > figure {
 
 footer > #music-title > figure {
   display: grid;
-  background-color: #292929;
+  background-color: #1f1f1f;
   place-items: center;
   color: #b3b3b3;
 }
 
 footer > #music-title > figure > svg {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
 }
 
 footer > #music-title > div {
@@ -412,6 +412,7 @@ footer > #music-controlls > #music-buttons > #footer-play-music:hover {
 #mainwrapper > section > #main-content > .main-stuff > ul > li > div {
   display: grid;
   place-items: center;
+  background-color: #292929;
 }
 
 #mainwrapper
@@ -426,8 +427,8 @@ footer > #music-controlls > #music-buttons > #footer-play-music:hover {
 }
 
 #mainwrapper > section > #main-content > .main-stuff > ul > li > div > svg {
-  width: 60px;
-  height: 60px;
+  width: 35px;
+  height: 35px;
   transition: all 0.15s ease;
 }
 
@@ -445,6 +446,17 @@ footer > #music-controlls > #music-buttons > #footer-play-music:hover {
   border-radius: 50%;
   background-color: #292929;
   text-align: center;
+  font-size: 35px;
+}
+
+#mainwrapper
+  > section
+  > #main-content
+  > .main-stuff
+  > ul
+  > li:hover
+  > #main-profile-text {
+  color: white;
 }
 
 #mainwrapper > section > #main-content > .main-stuff > ul > li > h4 {

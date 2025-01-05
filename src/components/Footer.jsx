@@ -178,7 +178,8 @@ export default function Footer() {
         <footer>
           <div id="music-title">
             {currentMusic.cover || currentMusic.music_cover ? (
-              <img loading='lazy'
+              <img
+                loading="lazy"
                 src={currentMusic.cover || currentMusic.music_cover}
                 alt={currentMusic.title || currentMusic.music_title}
               />
@@ -198,7 +199,8 @@ export default function Footer() {
 
               <a>
                 {truncateWord(
-                  getCreatorNames(currentMusic.id || currentMusic.music_id, 20)
+                  getCreatorNames(currentMusic.id || currentMusic.music_id),
+                  20
                 )}
               </a>
             </div>

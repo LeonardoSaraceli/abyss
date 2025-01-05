@@ -220,7 +220,7 @@ export default function MainContent() {
                   {truncateWord(music.title, 20)}
                 </h4>
 
-                <span>{truncateWord(getCreatorNames(music.id, 20))}</span>
+                <span>{truncateWord(getCreatorNames(music.id), 20)}</span>
               </li>
             ))}
           </ul>
@@ -262,7 +262,7 @@ export default function MainContent() {
                 ) : (
                   <h2 id="main-profile-text">{user.name[0].toUpperCase()}</h2>
                 )}
-                <h4>{user.name}</h4>
+                <h4>{truncateWord(user.name, 20)}</h4>
               </li>
             ))}
           </ul>
@@ -293,7 +293,7 @@ export default function MainContent() {
               >
                 <img loading="lazy" src={album.cover} alt={album.title} />
                 <h4>{truncateWord(album.title, 20)}</h4>
-                <span>{truncateWord(getCreatorNames(album.id, 20))}</span>
+                <span>{truncateWord(getCreatorNames(album.id), 20)}</span>
               </li>
             ))}
           </ul>

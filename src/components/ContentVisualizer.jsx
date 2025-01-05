@@ -17,6 +17,7 @@ export default function ContentVisualizer() {
     musicQueue,
     setCurrentAlbum,
     currentAlbum,
+    truncateWord,
   } = useContext(StateContext)
 
   const playAlbum = (album) => {
@@ -59,9 +60,9 @@ export default function ContentVisualizer() {
             />
 
             <div>
-              <h1>{currentVisualizer.title}</h1>
+              <h1>{truncateWord(currentVisualizer.title, 35)}</h1>
 
-              <a>{getCreatorNames(currentVisualizer.id)}</a>
+              <a>{truncateWord(getCreatorNames(currentVisualizer.id), 70)}</a>
             </div>
           </div>
 

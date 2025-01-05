@@ -47,7 +47,7 @@ export default function MainContent() {
         })
         .catch((error) => console.error(error))
     }
-  }, [])
+  }, [musics.length, singles.length])
 
   const searchBarResults = () => {
     const lowerCaseQuery = searchBar.toLowerCase()

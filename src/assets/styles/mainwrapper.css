@@ -12,6 +12,12 @@ footer {
   align-items: center;
 }
 
+@media screen and (max-width: 768px) {
+  footer {
+    overflow: auto;
+  }
+}
+
 footer > #music-title {
   display: grid;
   grid-template-columns: repeat(2, max-content);

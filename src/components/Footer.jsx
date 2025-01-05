@@ -28,6 +28,7 @@ export default function Footer() {
     setSelectedMusic,
     setVolume,
     volumeBarRef,
+    truncateWord,
   } = useContext(StateContext)
 
   const [currentTime, setCurrentTime] = useState(0)
@@ -177,7 +178,7 @@ export default function Footer() {
         <footer>
           <div id="music-title">
             {currentMusic.cover || currentMusic.music_cover ? (
-              <img
+              <img loading='lazy'
                 src={currentMusic.cover || currentMusic.music_cover}
                 alt={currentMusic.title || currentMusic.music_title}
               />
@@ -188,9 +189,18 @@ export default function Footer() {
             )}
 
             <div>
-              <h6>{currentMusic.title || currentMusic.music_title}</h6>
+              <h6>
+                {truncateWord(
+                  currentMusic.title || currentMusic.music_title,
+                  20
+                )}
+              </h6>
 
-              <a>{getCreatorNames(currentMusic.id || currentMusic.music_id)}</a>
+              <a>
+                {truncateWord(
+                  getCreatorNames(currentMusic.id || currentMusic.music_id, 20)
+                )}
+              </a>
             </div>
           </div>
 

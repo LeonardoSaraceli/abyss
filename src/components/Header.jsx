@@ -12,7 +12,7 @@ export default function Header() {
   return (
     <header id="header">
       <a href="/">
-        <img src={logo} alt="Abyss" />
+        <img loading='lazy' src={logo} alt="Abyss" />
       </a>
 
       <div id="search-nav">
@@ -43,7 +43,7 @@ export default function Header() {
 
       {Object.entries(user).length > 0 ? (
         user.picture ? (
-          <img id="profile-has-picture" src={user.picture} alt={user.name} />
+          <img loading='lazy' id="profile-has-picture" src={user.picture} alt={user.name} />
         ) : (
           <span id="profile-has-account">{user.name[0].toUpperCase()}</span>
         )

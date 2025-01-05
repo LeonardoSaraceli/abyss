@@ -22,23 +22,31 @@ export default function MainContent() {
     setCurrentQueueIndex,
     setMusicQueue,
     searchBar,
+    currentAlbum,
+    truncateWord,
+    musics,
   } = useContext(StateContext)
 
-  const [singles, setSingles] = useState([])
+  const [singles, setSingles] = useState(
+    JSON.parse(localStorage.getItem('singles')) || []
+  )
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/musics/singles`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.musics) {
-          setSingles(data.musics)
-        }
+    if (!localStorage.getItem('singles') || musics.length !== singles.length) {
+      fetch(`${import.meta.env.VITE_API_URL}/musics/singles`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
-      .catch((error) => console.error(error))
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.musics) {
+            localStorage.setItem('singles', JSON.stringify(data.musics))
+            setSingles(data.musics)
+          }
+        })
+        .catch((error) => console.error(error))
+    }
   }, [])
 
   const searchBarResults = () => {
@@ -78,7 +86,7 @@ export default function MainContent() {
   const [showAlbumsScroll, setShowAlbumsScroll] = useState(false)
 
   const scroll = (ref, direction) => {
-    const scrollAmount = 828
+    const scrollAmount = 1036
 
     if (ref.current) {
       ref.current.scrollBy({
@@ -131,10 +139,6 @@ export default function MainContent() {
     }
   }, [filteredMusics, filteredUsers, filteredAlbums])
 
-  const truncateWord = (word) => {
-    return word.length > 20 ? word.split('').slice(0, 17).join('').trim() + '...' : word
-  }
-
   return (
     <div
       id="main-content"
@@ -155,7 +159,7 @@ export default function MainContent() {
           )}
 
           <ul ref={musicsRef}>
-            {filteredMusics.map((music, index) => (
+            {filteredMusics.map((music) => (
               <li
                 key={music.id}
                 onClick={() => {
@@ -168,24 +172,21 @@ export default function MainContent() {
                     setCurrentAlbum(null)
                     localStorage.removeItem('current-album')
 
-                    localStorage.setItem(
-                      'music-queue',
-                      JSON.stringify(filteredMusics)
-                    )
-                    setMusicQueue(filteredMusics)
+                    localStorage.setItem('music-queue', JSON.stringify(singles))
+                    setMusicQueue(singles)
 
                     localStorage.setItem(
                       'current-queue-index',
-                      JSON.stringify(index)
+                      JSON.stringify(singles.indexOf(music))
                     )
-                    setCurrentQueueIndex(index)
+                    setCurrentQueueIndex(singles.indexOf(music))
 
                     localStorage.setItem('current-music', JSON.stringify(music))
                     setCurrentMusic(music)
                     setSelectedMusic(true)
 
                     if (audio) {
-                      audio.src = music.audio || music.music_url
+                      audio.src = music.audio || music.music_url || music.url
                       audio.load()
 
                       audio.oncanplaythrough = () => {
@@ -203,15 +204,23 @@ export default function MainContent() {
                 }}
               >
                 {music.cover ? (
-                  <img src={music.cover} alt={music.title} />
+                  <img loading="lazy" src={music.cover} alt={music.title} />
                 ) : (
                   <div>
                     <FontAwesomeIcon icon={faMusic} />
                   </div>
                 )}
-                <h4>{truncateWord(music.title)}</h4>
+                <h4
+                  style={
+                    !currentAlbum && currentMusic.id === music.id
+                      ? { color: '#d31fd2' }
+                      : null
+                  }
+                >
+                  {truncateWord(music.title, 20)}
+                </h4>
 
-                <span>{getCreatorNames(music.id)}</span>
+                <span>{truncateWord(getCreatorNames(music.id, 20))}</span>
               </li>
             ))}
           </ul>
@@ -245,6 +254,7 @@ export default function MainContent() {
               >
                 {user.picture ? (
                   <img
+                    loading="lazy"
                     id="main-profile-picture"
                     src={user.picture}
                     alt={user.name}
@@ -281,9 +291,9 @@ export default function MainContent() {
                 key={album.id}
                 onClick={() => handleOnClick('albums', album.id, 'album')}
               >
-                <img src={album.cover} alt={album.title} />
-                <h4>{album.title}</h4>
-                <span>{getCreatorNames(album.id)}</span>
+                <img loading="lazy" src={album.cover} alt={album.title} />
+                <h4>{truncateWord(album.title, 20)}</h4>
+                <span>{truncateWord(getCreatorNames(album.id, 20))}</span>
               </li>
             ))}
           </ul>

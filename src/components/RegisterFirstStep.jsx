@@ -27,7 +27,7 @@ export default function RegisterFirstStep({
 
   return (
     <>
-      <img src={logo} alt="Abyss" />
+      <img loading='lazy' src={logo} alt="Abyss" />
 
       <div className="stepper-bar">
         <div

@@ -3,6 +3,8 @@ import logo from '../assets/images/logo.svg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import { StateContext } from './App'
+import { useContext } from 'react'
 
 export default function RegisterSecondStep({
   setStage,
@@ -12,6 +14,7 @@ export default function RegisterSecondStep({
   setStepperBar,
   setGoBack,
 }) {
+  const { fetchUserInfo } = useContext(StateContext)
   const navigate = useNavigate()
   const handleOnSubmit = (e) => {
     e.preventDefault()
@@ -35,6 +38,7 @@ export default function RegisterSecondStep({
       .then((data) => {
         if (data) {
           localStorage.setItem('jwt', data.token)
+          fetchUserInfo()
           navigate('/')
         }
       })
@@ -45,7 +49,7 @@ export default function RegisterSecondStep({
 
   return (
     <>
-      <img src={logo} alt="Abyss" />
+      <img loading="lazy" src={logo} alt="Abyss" />
 
       <div className="stepper-bar">
         <div

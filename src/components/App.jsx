@@ -100,31 +100,48 @@ export default function App() {
     }
   }, [isPlaying, selectedMusic])
 
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/users/info`, {
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('jwt')}`,
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json()
-        }
+  const fetchUserInfo = () => {
+    if (localStorage.getItem('jwt')) {
+      fetch(`${import.meta.env.VITE_API_URL}/users/info`, {
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
       })
-      .then((data) => {
-        if (data) {
-          setUser(data.user)
-        }
-      })
-      .catch((error) => console.error(error))
+        .then((res) => {
+          if (!res.ok) {
+            return
+          }
 
+          return res.json()
+        })
+        .then((data) => {
+          if (data) {
+            setUser(data.user)
+          }
+        })
+        .catch((error) => console.error(error))
+    }
+  }
+
+  useEffect(() => {
+    fetchUserInfo()
     fetchAPI('users', setUsers)
     fetchAPI('usersMusics', setUsersMusics)
     fetchAPI('usersAlbums', setUsersAlbums)
     fetchAPI('musics', setMusics)
     fetchAPI('albums', setAlbums)
   }, [])
+
+  const truncateWord = (word, limit) => {
+    return word.length > limit
+      ? word
+          .split('')
+          .slice(0, limit - 3)
+          .join('')
+          .trim() + '...'
+      : word
+  }
 
   const getCreatorNames = (id) => {
     const relatedUsers = [...usersMusics, ...usersAlbums]
@@ -197,6 +214,8 @@ export default function App() {
         volumeBarRef,
         searchBar,
         setSearchBar,
+        truncateWord,
+        fetchUserInfo,
       }}
     >
       <Routes>

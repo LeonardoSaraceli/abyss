@@ -44,7 +44,7 @@ export default function RegisterWrapper() {
       {stage === 1 && (
         <>
           <div id="register-title">
-            <img src={logo} alt="Abyss" />
+            <img loading='lazy' src={logo} alt="Abyss" />
 
             <h1>
               Se inscreva e<br />

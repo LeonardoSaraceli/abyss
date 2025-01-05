@@ -1,5 +1,5 @@
 #aside {
-  display: grid;
+  display: none;
   grid-template-rows: max-content 1fr;
   padding: 1rem;
   border-radius: 0.5rem;

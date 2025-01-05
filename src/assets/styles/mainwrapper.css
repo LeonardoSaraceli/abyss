@@ -1,11 +1,12 @@
 footer {
   display: grid;
-  grid-template-columns: max-content 1fr max-content;
+  grid-template-columns: 250px 600px max-content;
   gap: 1rem;
   position: fixed;
   bottom: 0;
   height: 80px;
   padding: 0.5rem 1rem;
+  justify-content: space-between;
   width: 100%;
   color: white;
   align-items: center;
@@ -27,14 +28,14 @@ footer > #music-title > figure {
 
 footer > #music-title > figure {
   display: grid;
-  background-color: #1f1f1f;
+  background-color: #292929;
   place-items: center;
   color: #b3b3b3;
 }
 
 footer > #music-title > figure > svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }
 
 footer > #music-title > div {
@@ -198,9 +199,9 @@ footer > #music-controlls > #music-buttons > #footer-play-music:hover {
 
 #mainwrapper > section {
   display: grid;
-  grid-template-columns: 400px 1fr;
+  grid-template-columns: 1fr;
   padding: 0 0.5rem 0.5rem 0.5rem;
-  gap: 0.5rem;
+  /* gap: 0.5rem; */
 }
 
 #mainwrapper > section > #main-content,
@@ -306,7 +307,7 @@ footer > #music-controlls > #music-buttons > #footer-play-music:hover {
   width: 24px;
   height: 24px;
   display: grid;
-  background-color: #ffde04;
+  background-color: #d31fd2;
   padding: 1rem;
   border-radius: 50%;
   color: #121212;
@@ -316,7 +317,7 @@ footer > #music-controlls > #music-buttons > #footer-play-music:hover {
 
 #content-visualizer > .second-div-visualizer > #play-music:hover {
   transform: scale(1.05);
-  background-color: #cfb403;
+  background-color: #d31fd3ad;
 }
 
 #content-visualizer > .second-div-visualizer > ul {
@@ -328,8 +329,8 @@ footer > #music-controlls > #music-buttons > #footer-play-music:hover {
 
 #content-visualizer > .second-div-visualizer > ul > li {
   display: grid;
-  grid-template-columns: repeat(2, max-content);
-  gap: 2rem;
+  grid-template-columns: 30px max-content;
+  gap: 1rem;
   align-items: center;
   padding: 0.5rem 1.5rem;
   border-radius: 0.35rem;
@@ -397,6 +398,10 @@ footer > #music-controlls > #music-buttons > #footer-play-music:hover {
   transition: all 0.15s ease;
 }
 
+#mainwrapper > section > #main-content > .main-stuff > ul > li:hover > div {
+  background-color: #383838;
+}
+
 #mainwrapper > section > #main-content > .main-stuff > ul > li:hover {
   background-color: #1f1f1f;
 }
@@ -413,6 +418,7 @@ footer > #music-controlls > #music-buttons > #footer-play-music:hover {
   display: grid;
   place-items: center;
   background-color: #292929;
+  transition: all 0.15s ease;
 }
 
 #mainwrapper
@@ -427,8 +433,8 @@ footer > #music-controlls > #music-buttons > #footer-play-music:hover {
 }
 
 #mainwrapper > section > #main-content > .main-stuff > ul > li > div > svg {
-  width: 35px;
-  height: 35px;
+  width: 36px;
+  height: 36px;
   transition: all 0.15s ease;
 }
 
@@ -446,7 +452,8 @@ footer > #music-controlls > #music-buttons > #footer-play-music:hover {
   border-radius: 50%;
   background-color: #292929;
   text-align: center;
-  font-size: 35px;
+  font-size: 32px;
+  transition: all 0.15s ease;
 }
 
 #mainwrapper
@@ -457,6 +464,7 @@ footer > #music-controlls > #music-buttons > #footer-play-music:hover {
   > li:hover
   > #main-profile-text {
   color: white;
+  background-color: #383838;
 }
 
 #mainwrapper > section > #main-content > .main-stuff > ul > li > h4 {

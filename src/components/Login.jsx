@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import '../assets/styles/login.css'
 import logo from '../assets/images/logo.svg'
 import { useNavigate } from 'react-router-dom'
+import { StateContext } from './App'
 
 export default function Login() {
+  const { fetchUserInfo } = useContext(StateContext)
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: '',
@@ -40,6 +42,7 @@ export default function Login() {
       .then((data) => {
         if (data) {
           localStorage.setItem('jwt', data.token)
+          fetchUserInfo()
           navigate('/')
         }
       })
@@ -52,7 +55,7 @@ export default function Login() {
     <main id="login">
       <section>
         <div>
-          <img src={logo} alt="Abyss" />
+          <img loading="lazy" src={logo} alt="Abyss" />
 
           <h1>Entrar no Abyss</h1>
 

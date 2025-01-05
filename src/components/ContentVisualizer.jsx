@@ -52,7 +52,11 @@ export default function ContentVisualizer() {
       {currentVisualizer.cover ? (
         <>
           <div className="first-div-visualizer">
-            <img src={currentVisualizer.cover} alt={currentVisualizer.title} />
+            <img
+              loading="lazy"
+              src={currentVisualizer.cover}
+              alt={currentVisualizer.title}
+            />
 
             <div>
               <h1>{currentVisualizer.title}</h1>
@@ -131,7 +135,7 @@ export default function ContentVisualizer() {
                     <span
                       style={
                         currentMusic.music_id === music.music_id
-                          ? { color: '#FFDE04' }
+                          ? { color: '#d31fd2' }
                           : null
                       }
                     >
@@ -142,7 +146,7 @@ export default function ContentVisualizer() {
                       <span
                         style={
                           currentMusic.music_id === music.music_id
-                            ? { color: '#FFDE04' }
+                            ? { color: '#d31fd2' }
                             : null
                         }
                       >
@@ -161,6 +165,7 @@ export default function ContentVisualizer() {
           <div>
             {currentVisualizer.picture ? (
               <img
+                loading="lazy"
                 src={currentVisualizer.picture}
                 alt={currentVisualizer.title}
               />

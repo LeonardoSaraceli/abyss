@@ -93,6 +93,12 @@ body {
   scrollbar-color: hsla(0, 0%, 100%, 0.3) transparent;
 }
 
+@media screen and (max-width: 768px) {
+  body {
+    overflow: auto;
+  }
+}
+
 html {
   font-family: 'Satoshi', sans-serif;
   font-weight: 500;

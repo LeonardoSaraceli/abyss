@@ -24,43 +24,21 @@ export default function MainContent() {
     searchBar,
     currentAlbum,
     truncateWord,
-    musics,
+    singles,
   } = useContext(StateContext)
 
-  const [singles, setSingles] = useState(
-    JSON.parse(localStorage.getItem('singles')) || []
-  )
-
-  useEffect(() => {
-    if (!localStorage.getItem('singles') || musics.length !== singles.length) {
-      fetch(`${import.meta.env.VITE_API_URL}/musics/singles`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data && data.musics) {
-            localStorage.setItem('singles', JSON.stringify(data.musics))
-            setSingles(data.musics)
-          }
-        })
-        .catch((error) => console.error(error))
-    }
-  }, [musics.length, singles.length])
-
   const searchBarResults = () => {
-    const lowerCaseQuery = searchBar.toLowerCase()
+    const lowerCaseQuery = searchBar?.toLowerCase()
 
-    const filteredMusics = singles.filter((music) =>
+    const filteredMusics = singles?.filter((music) =>
       music.title.toLowerCase().includes(lowerCaseQuery)
     )
 
-    const filteredUsers = users.filter((user) =>
+    const filteredUsers = users?.filter((user) =>
       user.name.toLowerCase().includes(lowerCaseQuery)
     )
 
-    const filteredAlbums = albums.filter((album) =>
+    const filteredAlbums = albums?.filter((album) =>
       album.title.toLowerCase().includes(lowerCaseQuery)
     )
 
@@ -148,7 +126,7 @@ export default function MainContent() {
           : null
       }
     >
-      {filteredMusics.length > 0 && (
+      {filteredMusics && filteredMusics.length > 0 && (
         <div className="main-stuff">
           <h1>Singles</h1>
 
@@ -184,6 +162,18 @@ export default function MainContent() {
                     localStorage.setItem('current-music', JSON.stringify(music))
                     setCurrentMusic(music)
                     setSelectedMusic(true)
+
+                    if ('mediaSession' in navigator) {
+                      navigator.mediaSession.metadata = new MediaMetadata({
+                        title: music.title,
+                        artist: getCreatorNames(music.id),
+                        artwork: [
+                          {
+                            src: music?.cover,
+                          },
+                        ],
+                      })
+                    }
 
                     if (audio) {
                       audio.src = music.audio || music.music_url || music.url
@@ -236,7 +226,7 @@ export default function MainContent() {
         </div>
       )}
 
-      {filteredUsers.length > 0 && (
+      {filteredUsers && filteredUsers.length > 0 && (
         <div className="main-stuff">
           <h1>Perfis</h1>
 
@@ -275,7 +265,7 @@ export default function MainContent() {
         </div>
       )}
 
-      {filteredAlbums.length > 0 && (
+      {filteredAlbums && filteredAlbums.length > 0 && (
         <div className="main-stuff">
           <h1>Álbuns</h1>
 

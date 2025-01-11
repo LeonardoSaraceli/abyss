@@ -3,17 +3,27 @@ import { Route, Routes } from 'react-router-dom'
 import RegisterWrapper from './RegisterWrapper'
 import Login from './Login'
 import MainWrapper from './MainWrapper'
-import { createContext, useEffect, useRef, useState } from 'react'
+import { createContext, useCallback, useEffect, useRef, useState } from 'react'
 
 export const StateContext = createContext()
 
 export default function App() {
   const [user, setUser] = useState({})
-  const [users, setUsers] = useState([])
-  const [usersMusics, setUsersMusics] = useState([])
-  const [usersAlbums, setUsersAlbums] = useState([])
-  const [musics, setMusics] = useState([])
-  const [albums, setAlbums] = useState([])
+  const [users, setUsers] = useState(
+    JSON.parse(localStorage.getItem('users')) || []
+  )
+  const [usersMusics, setUsersMusics] = useState(
+    JSON.parse(localStorage.getItem('usersMusics')) || []
+  )
+  const [usersAlbums, setUsersAlbums] = useState(
+    JSON.parse(localStorage.getItem('usersAlbums')) || []
+  )
+  const [musics, setMusics] = useState(
+    JSON.parse(localStorage.getItem('musics')) || []
+  )
+  const [albums, setAlbums] = useState(
+    JSON.parse(localStorage.getItem('albums')) || []
+  )
   const [currentVisualizer, setCurrentVisualizer] = useState(
     JSON.parse(localStorage.getItem('current-visualizer')) || {}
   )
@@ -34,17 +44,26 @@ export default function App() {
   const [currentAlbum, setCurrentAlbum] = useState(
     JSON.parse(localStorage.getItem('current-album')) || null
   )
+  const [singles, setSingles] = useState(
+    JSON.parse(localStorage.getItem('singles')) || []
+  )
   const [searchBar, setSearchBar] = useState('')
 
   const audioRef = useRef(null)
 
   const fetchAPI = async (endpoint, setter) => {
+    const hasSingles = endpoint.includes('singles')
+
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`, {
         headers: { 'Content-Type': 'application/json' },
       })
       const data = await res.json()
-      setter(data[endpoint])
+      localStorage.setItem(
+        hasSingles ? 'singles' : endpoint,
+        JSON.stringify(data[hasSingles ? 'musics' : endpoint])
+      )
+      setter(data[hasSingles ? 'musics' : endpoint])
     } catch (error) {
       console.error(error)
     }
@@ -126,6 +145,7 @@ export default function App() {
 
   useEffect(() => {
     fetchUserInfo()
+    fetchAPI('musics/singles', setSingles)
     fetchAPI('users', setUsers)
     fetchAPI('usersMusics', setUsersMusics)
     fetchAPI('usersAlbums', setUsersAlbums)
@@ -143,16 +163,21 @@ export default function App() {
       : word
   }
 
-  const getCreatorNames = (id) => {
-    const relatedUsers = [...usersMusics, ...usersAlbums]
-      .filter((relation) => relation.musicid === id || relation.albumid === id)
-      .map((relation) => relation.userid)
+  const getCreatorNames = useCallback(
+    (id) => {
+      const relatedUsers = [...usersMusics, ...usersAlbums]
+        .filter(
+          (relation) => relation.musicid === id || relation.albumid === id
+        )
+        .map((relation) => relation.userid)
 
-    return users
-      .filter((user) => relatedUsers.includes(user.id))
-      .map((user) => user.name)
-      .join(', ')
-  }
+      return users
+        .filter((user) => relatedUsers.includes(user.id))
+        .map((user) => user.name)
+        .join(', ')
+    },
+    [users, usersAlbums, usersMusics]
+  )
 
   useEffect(() => {
     localStorage.setItem('music-queue', JSON.stringify(musicQueue))
@@ -185,6 +210,26 @@ export default function App() {
     }
   }, [currentMusic])
 
+  useEffect(() => {
+    if ('mediaSession' in navigator && currentMusic) {
+      const metadata = {
+        title: currentMusic.title || currentMusic.music_title,
+        artist: getCreatorNames(currentMusic.id || currentMusic.music_id),
+        album: currentAlbum?.title || undefined,
+        artwork:
+          currentMusic?.cover || currentMusic?.music_cover
+            ? [
+                {
+                  src: currentMusic?.cover || currentMusic?.music_cover,
+                },
+              ]
+            : undefined,
+      }
+
+      navigator.mediaSession.metadata = new MediaMetadata(metadata)
+    }
+  }, [currentAlbum, currentMusic, getCreatorNames])
+
   return (
     <StateContext.Provider
       value={{
@@ -216,6 +261,7 @@ export default function App() {
         setSearchBar,
         truncateWord,
         fetchUserInfo,
+        singles,
       }}
     >
       <Routes>

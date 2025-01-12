@@ -40,9 +40,6 @@ export default function Footer() {
     const audio = audioRef.current
 
     if (audio && currentMusic) {
-      audio.src = currentMusic.audio || currentMusic.music_url
-      audio.load()
-
       const handleMetadata = () => {
         setDuration(audio.duration)
         setCurrentTime(0)

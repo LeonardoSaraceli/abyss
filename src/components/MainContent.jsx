@@ -18,7 +18,6 @@ export default function MainContent() {
     setSelectedMusic,
     togglePlayPause,
     setCurrentAlbum,
-    audioRef,
     setCurrentQueueIndex,
     setMusicQueue,
     searchBar,
@@ -141,12 +140,11 @@ export default function MainContent() {
               <li
                 key={music.id}
                 onClick={() => {
-                  const audio = audioRef.current
-                  if (audio && !audio.paused) {
-                    audio.pause()
-                  }
-
-                  if (!currentMusic || currentMusic.id !== music.id) {
+                  if (
+                    !currentMusic ||
+                    (currentMusic &&
+                      (currentMusic.id || currentMusic.music_id) !== music.id)
+                  ) {
                     setCurrentAlbum(null)
                     localStorage.removeItem('current-album')
 
@@ -162,32 +160,6 @@ export default function MainContent() {
                     localStorage.setItem('current-music', JSON.stringify(music))
                     setCurrentMusic(music)
                     setSelectedMusic(true)
-
-                    if ('mediaSession' in navigator) {
-                      navigator.mediaSession.metadata = new MediaMetadata({
-                        title: music.title,
-                        artist: getCreatorNames(music.id),
-                        artwork: [
-                          {
-                            src: music?.cover,
-                          },
-                        ],
-                      })
-                    }
-
-                    if (audio) {
-                      audio.src = music.audio || music.music_url || music.url
-                      audio.load()
-
-                      audio.oncanplaythrough = () => {
-                        audio.play().catch((error) => {
-                          console.error(
-                            'Erro ao tentar reproduzir a música:',
-                            error
-                          )
-                        })
-                      }
-                    }
                   } else {
                     togglePlayPause()
                   }

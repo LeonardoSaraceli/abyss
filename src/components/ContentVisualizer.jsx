@@ -105,31 +105,38 @@ export default function ContentVisualizer() {
                       )
 
                       if (selectedIndex !== -1) {
-                        setCurrentAlbum(currentVisualizer)
-                        localStorage.setItem(
-                          'current-album',
-                          JSON.stringify(currentVisualizer)
-                        )
+                        if (
+                          (currentMusic.id || currentMusic.music_id) !==
+                          music.music_id
+                        ) {
+                          setCurrentAlbum(currentVisualizer)
+                          localStorage.setItem(
+                            'current-album',
+                            JSON.stringify(currentVisualizer)
+                          )
 
-                        setMusicQueue(queue)
-                        localStorage.setItem(
-                          'music-queue',
-                          JSON.stringify(queue)
-                        )
+                          setMusicQueue(queue)
+                          localStorage.setItem(
+                            'music-queue',
+                            JSON.stringify(queue)
+                          )
 
-                        setCurrentQueueIndex(selectedIndex)
-                        localStorage.setItem(
-                          'current-queue-index',
-                          selectedIndex
-                        )
+                          setCurrentQueueIndex(selectedIndex)
+                          localStorage.setItem(
+                            'current-queue-index',
+                            selectedIndex
+                          )
 
-                        setCurrentMusic(queue[selectedIndex])
-                        localStorage.setItem(
-                          'current-music',
-                          JSON.stringify(queue[selectedIndex])
-                        )
+                          setCurrentMusic(queue[selectedIndex])
+                          localStorage.setItem(
+                            'current-music',
+                            JSON.stringify(queue[selectedIndex])
+                          )
 
-                        setSelectedMusic(true)
+                          setSelectedMusic(true)
+                        } else {
+                          togglePlayPause()
+                        }
                       }
                     }}
                   >
